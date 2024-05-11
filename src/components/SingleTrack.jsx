@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 import { useEffect, useState } from "react";
 
@@ -7,6 +7,7 @@ const SingleTrack = () => {
   useEffect(() => {
     getSongs();
   }, []);
+
   const getSongs = async () => {
     try {
       let resp = await fetch(
@@ -14,8 +15,9 @@ const SingleTrack = () => {
       );
       if (resp.ok) {
         let fetchSongs = await resp.json();
-        setSongs(fetchSongs);
-        console.log(setSongs(fetchSongs));
+        setSongs(fetchSongs.data);
+
+        console.log(setSongs(fetchSongs.data));
         console.log(songs);
       } else {
         console.log("err");
@@ -25,14 +27,19 @@ const SingleTrack = () => {
     }
   };
 
-  songs.map((song) => (
-    <Card key={song.id}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>{song.title}</Card.Title>
-      </Card.Body>
-    </Card>
-  ));
+  return (
+    <Col>
+      {songs &&
+        songs.map((song) => (
+          <Card key={song.id}>
+            <Card.Img variant="top" src={songs.md5_image} />
+            <Card.Body>
+              <Card.Title>{song.title}</Card.Title>
+            </Card.Body>
+          </Card>
+        ))}
+    </Col>
+  );
 };
 
 export default SingleTrack;
