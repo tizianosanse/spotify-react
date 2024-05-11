@@ -32,7 +32,11 @@ const SingleTrack = () => {
       {songs &&
         songs.map((song) => (
           <Card key={song.id}>
-            <Card.Img variant="top" src={songs.md5_image} />
+            <Card.Img
+              variant="top"
+              src={song.album.cover}
+              style={{ width: "200px" }}
+            />
             <Card.Body>
               <Card.Title>{song.title}</Card.Title>
             </Card.Body>
